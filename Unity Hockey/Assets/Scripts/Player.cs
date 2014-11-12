@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public Material Color;
     public GameObject Paddle;
     public GameObject PaddlePrefab;
+    public PlayerTypes PlayerType = PlayerTypes.Computer;
     
     // Dont need to modify these.
     private RaycastHit _hit;
@@ -21,13 +22,30 @@ public class Player : MonoBehaviour {
             Email = "anonymous@email.com";
 	}
 
+    void Update()
+    {
+        switch(PlayerType)
+        {
+            case PlayerTypes.Human:
+                MovePaddleWithMouse();
+                break;
+            case PlayerTypes.Computer:
+                MovePaddleWithAI();
+                break;
+            case PlayerTypes.Network:
+                GetNetworkPlayerIntent();
+                break;
+        }
+    }
+
     /// <summary>
     /// Use this to move the Paddle with a collision with the mouse and the PlayerField.
     /// </summary>
 	public void MovePaddleWithMouse () {
+        //Debug.Log("moving " + name + " with the mouse.");
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, (1 << 8)))
         {
-            // Send the Paddle to the position where the mouse ray collides with the game board.
+            // Send the Paddle to the position where the mouse ray collides with the PlayerField.
             Paddle.GetComponent<PaddleController>().MoveTo(_hit.point);
         }
 	}
@@ -36,6 +54,21 @@ public class Player : MonoBehaviour {
     /// Use this to move the Paddle as an Artificial Intelligence.
     /// </summary>
     public void MovePaddleWithAI () {
+        //Debug.Log("moving " + name + " with the ai.");
+    }
 
+    /// <summary>
+    /// Use this to move the paddle based on the values presented from the Networkview.
+    /// </summary>
+    public void GetNetworkPlayerIntent()
+    {
+        //Debug.Log("moving " + name + " with the netview.");
+    }
+
+    public enum PlayerTypes
+    {
+        Human,
+        Computer,
+        Network
     }
 }

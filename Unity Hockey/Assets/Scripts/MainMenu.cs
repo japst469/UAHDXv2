@@ -58,7 +58,7 @@ public class MainMenu : MonoBehaviour {
     void Update()
     {
         // Cast a ray from the mouse's 3D position into the scene.
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit ) )
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, (1<<5)) )
         {
             // If a collision with A UI element has occured:
             string name = hit.transform.name;           //Get name of object raycasted

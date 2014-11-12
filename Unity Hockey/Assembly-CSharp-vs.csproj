@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Puck.cs" />
      <Compile Include="Assets\Scripts\AnimatedGifDrawer.cs" />
      <Compile Include="Assets\Scripts\BillBoard.cs" />
      <Compile Include="Assets\Scripts\CameraControl.cs" />
@@ -71,10 +72,10 @@
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap Only.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Lightmap Shaders (Legacy)\Mobile Lightmap AlphaTest.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/FILES/PROJECTS/github/UAHDX/UAHDX/Unity Hockey/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/FILES/PROJECTS/github/UAHDXv2/UAHDXv2/Unity Hockey/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="System.Drawing">
- <HintPath>C:/FILES/PROJECTS/github/UAHDX/UAHDX/Unity Hockey/Assets/Scripts/System.Drawing.dll</HintPath>
+ <HintPath>C:/FILES/PROJECTS/github/UAHDXv2/UAHDXv2/Unity Hockey/Assets/Scripts/System.Drawing.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
