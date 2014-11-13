@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour {
     
     private GameObject gd;
     private RaycastHit hit;             //Raycast object
+    private GameObject go;
     
 	void Awake () {
         gd = GameObject.Find("  GameData");
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour {
         }
         // Cache the gamedata script
         GameData = gd.GetComponent<__GameData>() as __GameData;
+        go = this.gameObject;
 	}
 
     void Start()
@@ -52,7 +54,7 @@ public class MainMenu : MonoBehaviour {
             default:
                 Debug.LogError("State is in default. It should not be here!");
                 break;
-        }
+        }        
     }
     
     void Update()
@@ -137,7 +139,9 @@ public class MainMenu : MonoBehaviour {
                         hit.transform.audio.Play();
                         GameData.State = __GameData.AirHockeyState.OptionsMenu;
                         if ("Options" != currentLevel)
+                        {
                             Application.LoadLevel("Options");
+                        }
                         
                     }
                     break;
@@ -171,6 +175,10 @@ public class MainMenu : MonoBehaviour {
                     break;
             }
 
+            if (clicked)
+            {
+                go.transform.audio.Play();
+            }
         }
     }
 
