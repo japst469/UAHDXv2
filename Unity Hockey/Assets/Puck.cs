@@ -3,8 +3,11 @@ using System.Collections;
 
 public class Puck : MonoBehaviour {
 
+
+
 	// Use this for initialization
 	void Start () {
+	
 	}
 	
 	// Update is called once per frame

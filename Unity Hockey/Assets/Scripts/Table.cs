@@ -24,7 +24,6 @@ public class Table : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        SendEmail();
         Player1Spawn = GameObject.Find("P1PaddleSpawn") as GameObject;
         Player2Spawn = GameObject.Find("P2PaddleSpawn") as GameObject;
         Player3Spawn = GameObject.Find("P3PaddleSpawn") as GameObject;
@@ -42,6 +41,8 @@ public class Table : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         // Respawns the puck if it is outside of the bounds.
         foreach( GameObject go in pucks )
         {
@@ -135,29 +136,5 @@ public class Table : MonoBehaviour
             Destroy(go);
         else
             Debug.Log("That puck doesn't exist.");
-    }
-
-    public void SendEmail()
-    {
-        byte[] score=new byte[4];
-        score[0]=5;
-        score[1]=10;
-        score[2]=10;
-        score[3]=10;
-
-        string[] users=new string[4];
-        users[0]="Tamkis314";
-        users[1]="J0$hfinity";
-        users[2]="Mattyew14";
-        users[3]="GranTPain";
-
-        //Replace to/from fields with approrpiate emails!
-        const string to = "emailaddress@something.com,emailaddress@something.com,emailaddress@something.com,emailaddress@something.com";
-        const string from="emailaddress@something.com";
-        string[] mail_creds=new string[2];
-        mail_creds[0] = "emailaddress@something.com";            //email address of GMAIL sender
-        mail_creds[1]="FAKEPASSWORD";   //Password of GMAIL sender
-
-        Email.Send(mail_creds, to, from, users, score);
     }
 }
