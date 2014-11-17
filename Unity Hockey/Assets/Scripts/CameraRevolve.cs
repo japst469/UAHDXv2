@@ -1,10 +1,4 @@
-﻿//Script "borrowed"
-//from somewhere. IDR
-
-//Causes camera to point towards an object, and revolve in circle around it
-//Need to select target GameObject in Editor
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CameraRevolve : MonoBehaviour {

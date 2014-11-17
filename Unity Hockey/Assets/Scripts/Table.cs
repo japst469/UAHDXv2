@@ -78,7 +78,7 @@ public class Table : MonoBehaviour
     {
         if( go != null )
         {
-            // Make is stop moving.
+            // Make it stop moving.
             go.rigidbody.velocity = Vector3.zero;
             go.rigidbody.angularVelocity = Vector3.zero;
             // Reset its rotation.
@@ -87,7 +87,10 @@ public class Table : MonoBehaviour
             //go.rigidbody.inertiaTensorRotation = Quaternion.identity;
             // reset its position.
             go.transform.position = PuckSpawn.transform.position;
-            
+            // Reset its constraints
+            go.rigidbody.constraints = RigidbodyConstraints.None;
+            // Reset its material
+            go.GetComponentInChildren<MeshRenderer>().material = Resources.Load("Game Assets/Materials/Color_000") as Material;
         }
     }
 
@@ -107,9 +110,6 @@ public class Table : MonoBehaviour
     /// <param name="position">The Vector3 where to put the new puck.</param>
     public void AddPuck(Vector3 position)
     {
-        if (position == null)
-            position = PuckSpawn.transform.position;
-
         GameObject go = GameObject.Find("Puck");
         if (go == null)
         {
@@ -136,5 +136,38 @@ public class Table : MonoBehaviour
             Destroy(go);
         else
             Debug.Log("That puck doesn't exist.");
+    }
+
+    /// <summary>
+    /// Creates a Region where the Powerup is able to spawn.
+    /// </summary>
+    /// <param name="anchor"></param>
+    /// <param name="obj"></param>
+    /// <param name="radius_X"></param>
+    /// <param name="radius_Z"></param>
+    public void RandomizeInRegion(GameObject anchor, GameObject obj, float radius_X, float radius_Z)
+    {
+        //Object variables
+        float x, z; //It's x and z offset coords, local to Spawner
+        //Anchor object
+        float Anchor_X, Anchor_Y, Anchor_Z;    //Its x, y, z coords
+
+        Anchor_X = anchor.transform.position.x;
+        Anchor_Y = anchor.transform.position.y;
+        Anchor_Z = anchor.transform.position.z;
+
+        Vector3 NewPos;     //New position vector
+        UnityEngine.Random.seed = (int)System.DateTime.Now.Ticks;   //@Get new randomization seed from system time. Needs to be synced in netgames!
+
+        //Get random X & Z offset, and Type of powerup        
+        x = UnityEngine.Random.Range(-radius_X, radius_X);
+        z = UnityEngine.Random.Range(-radius_Z, radius_Z);
+
+        //Place It, relative to Spawner
+        NewPos.x = Anchor_X + x;
+        NewPos.y = Anchor_Y;
+        NewPos.z = Anchor_Z + z;
+        obj.gameObject.transform.position = NewPos; //Update the position
+        // @TODO add the sound effect for a teleport.
     }
 }

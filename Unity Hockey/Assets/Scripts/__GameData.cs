@@ -10,6 +10,8 @@ public class __GameData : MonoBehaviour
     public GameObject PlayerPrefab;     // Set this to a Player.
     public int PlayerCount = 4;         // The number of Players that the User selects.
 
+    public GameObject Table;               // The current table in the scene.
+
     // The Game Mode determines how to load the Game Scene.
     public AirHockeyMode Mode = AirHockeyMode.AirHockey;
     // The Difficulty determines how to load the game scene and how the AI reacts to the player.
@@ -42,7 +44,6 @@ public class __GameData : MonoBehaviour
     {
         string name;                        // used internally to store several different names of objects.
         Player player;                      // used internally to store a temporary player struct.
-        GameObject tableObject = null;      // used internally to store a temporary table struct.
 
         // Create the appropriate Table
         switch (Mode)
@@ -55,33 +56,33 @@ public class __GameData : MonoBehaviour
                         case AirHockeyDifficulty.Easy:
                             Debug.Log(AirHockeyDifficulty.Easy.ToString());
                             name = PlayerCount > 2 ? "Prefabs/4P_Sm" : "Prefabs/2P_Sm";
-                            tableObject = Instantiate(Resources.Load(name)) as GameObject;
-                            if (null == tableObject)
-                                Debug.LogError("Table Does Not Exist !!");
+                            Table = Instantiate(Resources.Load(name)) as GameObject;
+                            if (null == Table)
+                                Debug.LogError("Table Prefab Does Not Exist !!");
                             break;
                         case AirHockeyDifficulty.Medium:
                             {
                                 Debug.Log(AirHockeyDifficulty.Medium.ToString());
                                 name = PlayerCount > 2 ? "Prefabs/4P_Md" : "Prefabs/2P_Md";
-                                tableObject = Instantiate(Resources.Load(name)) as GameObject;
-                                if (null == tableObject)
-                                    Debug.LogError("Table Does Not Exist !!");
+                                Table = Instantiate(Resources.Load(name)) as GameObject;
+                                if (null == Table)
+                                    Debug.LogError("Table Prefab Does Not Exist !!");
                             }
                             break;
                         case AirHockeyDifficulty.Hard:
                             {
                                 Debug.Log(AirHockeyDifficulty.Hard.ToString());
                                 name = PlayerCount > 2 ? "Prefabs/4P_Lg" : "Prefabs/2P_Lg";
-                                tableObject = Instantiate(Resources.Load(name)) as GameObject;
-                                if (null == tableObject)
-                                    Debug.LogError("Table Does Not Exist !!");
+                                Table = Instantiate(Resources.Load(name)) as GameObject;
+                                if (null == Table)
+                                    Debug.LogError("Table Prefab Does Not Exist !!");
                             }
                             break;
                         default:
                             name = PlayerCount > 2 ? "Prefabs/4P_Sm" : "Prefabs/2P_Sm";
-                            tableObject = Instantiate(Resources.Load(name)) as GameObject;
-                            if (null == tableObject)
-                                Debug.LogError("Table Does Not Exist !!");
+                            Table = Instantiate(Resources.Load(name)) as GameObject;
+                            if (null == Table)
+                                Debug.LogError("Table Prefab Does Not Exist !!");
                             break;
                     }
 
@@ -97,13 +98,13 @@ public class __GameData : MonoBehaviour
         // Create a local array for the Goal Spawn Points.
         Vector3[] goalSpawnPosition = new Vector3[5];
         // set references to the spawn point.
-        goalSpawnPosition[1] = tableObject.GetComponent<Table>().Player1Spawn.transform.position;
-        goalSpawnPosition[2] = tableObject.GetComponent<Table>().Player2Spawn.transform.position;
-        goalSpawnPosition[3] = tableObject.GetComponent<Table>().Player3Spawn.transform.position;
-        goalSpawnPosition[4] = tableObject.GetComponent<Table>().Player4Spawn.transform.position;
+        goalSpawnPosition[1] = Table.GetComponent<Table>().Player1Spawn.transform.position;
+        goalSpawnPosition[2] = Table.GetComponent<Table>().Player2Spawn.transform.position;
+        goalSpawnPosition[3] = Table.GetComponent<Table>().Player3Spawn.transform.position;
+        goalSpawnPosition[4] = Table.GetComponent<Table>().Player4Spawn.transform.position;
 
         // Add a puck to the table.
-        tableObject.GetComponent<Table>().AddPuck();
+        Table.GetComponent<Table>().AddPuck();
         Debug.Log("Puck has been added.");
 
         // Create The Players
@@ -134,18 +135,52 @@ public class __GameData : MonoBehaviour
         }
 
         // Determine if the game scene was properly initialized.
-        if (Players.Count == PlayerCount && tableObject != null)
+        if (Players.Count == PlayerCount && Table != null)
             initialized = true;
         else
             initialized = false;
 
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Check for victory Condition.
+        foreach( GameObject plr in Players )
+        {
+            if (plr.GetComponent<Player>().Score >= 10)
+            {
+                // @TODO add winner code.
+                Debug.Log(plr.name + " has won!");
+                
+                break;
+            }
+        }
+    }
 
+    public void SendEmail()
+    {
+        byte[] score = new byte[4];
+        score[0] = 5;
+        score[1] = 10;
+        score[2] = 10;
+        score[3] = 10;
+
+        string[] users = new string[4];
+        users[0] = "Tamkis314";
+        users[1] = "J0$hfinity";
+        users[2] = "Mattyew14";
+        users[3] = "GranTPain";
+
+        //Replace to/from fields with approrpiate emails!
+        const string to = "emailaddress@something.com,emailaddress@something.com,emailaddress@something.com,emailaddress@something.com";
+        const string from = "emailaddress@something.com";
+        string[] mail_creds = new string[2];
+        mail_creds[0] = "emailaddress@something.com";            //email address of GMAIL sender
+        mail_creds[1] = "FAKEPASSWORD";   //Password of GMAIL sender
+
+        Email.Send(mail_creds, to, from, users, score);
     }
 
     public enum AirHockeyState
@@ -167,7 +202,8 @@ public class __GameData : MonoBehaviour
     public enum AirHockeyMode
     {
         AirHockey,
-        PinBall
+        PinBall,
+        Battle
     };
 
     public enum AirHockeyNetType
@@ -175,5 +211,28 @@ public class __GameData : MonoBehaviour
         Server,
         Client
     };
+
+    public enum AirHockeyPowerups
+    {
+        Nothing,
+        Army,
+        BSaver,
+        Big,
+        Block,
+        Bumpers,
+        Fastmo,
+        Grav,
+        HotPot,
+        Invis,
+        Kill,
+        Multi,
+        Portals,
+        Ramps,
+        Shield,
+        Slomo,
+        Swap,
+        Random
+    };
+
 }
 

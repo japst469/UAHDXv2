@@ -46,19 +46,26 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Puck.cs" />
      <Compile Include="Assets\Scripts\AnimatedGifDrawer.cs" />
+     <Compile Include="Assets\Scripts\Announcer.cs" />
      <Compile Include="Assets\Scripts\BillBoard.cs" />
+     <Compile Include="Assets\Scripts\Bumper.cs" />
      <Compile Include="Assets\Scripts\CameraControl.cs" />
      <Compile Include="Assets\Scripts\CameraRevolve.cs" />
      <Compile Include="Assets\Scripts\Credits.cs" />
+     <Compile Include="Assets\Scripts\Email.cs" />
      <Compile Include="Assets\Scripts\InitTitle.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\Opts.cs" />
      <Compile Include="Assets\Scripts\PaddleController.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\PlayerSel.cs" />
+     <Compile Include="Assets\Scripts\Portals.cs" />
+     <Compile Include="Assets\Scripts\PowerUps.cs" />
+     <Compile Include="Assets\Scripts\Puck.cs" />
+     <Compile Include="Assets\Scripts\Ramp.cs" />
      <Compile Include="Assets\Scripts\Table.cs" />
+     <Compile Include="Assets\Scripts\Wall_Piece.cs" />
      <Compile Include="Assets\Scripts\__GameData.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
